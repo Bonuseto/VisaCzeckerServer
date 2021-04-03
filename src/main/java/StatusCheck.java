@@ -5,8 +5,6 @@ import java.io.IOException;
 
 public class StatusCheck {
 
-    static String result;
-
     public static String check(String applicationNumImport, String xxFieldImport, String applicationTypeImport, String yearImport) {
 
         Document document = null;
@@ -27,22 +25,22 @@ public class StatusCheck {
         String approvedStatus = String.valueOf(document.getElementsMatchingOwnText("Decided – APPROVED"));
         String inprocessStatus = String.valueOf(document.getElementsMatchingOwnText("Process"));
         String rejectedStatus = String.valueOf(document.getElementsMatchingOwnText("Decided – REJECTED"));
+        String notFoundStatus = String.valueOf(document.getElementsMatchingOwnText("Not found"));
 
-        if (!empty(approvedStatus)) {
+        String result = "Something went wrong";
+
+        if (!approvedStatus.isEmpty()) {
             result = "Decided - Approved";
-        } else if (!empty(inprocessStatus)) {
-            result = "In Process";
-        } else if (!empty(rejectedStatus)) {
-            result = "Decided - Rejected";
-        } else {
-            result = "Error";
         }
-
+        if (!inprocessStatus.isEmpty()) {
+            result = "In Process";
+        }
+        if (!rejectedStatus.isEmpty()) {
+            result = "Decided - Rejected";
+        }
+        if (!notFoundStatus.isEmpty()) {
+            result = "Not found";
+        }
         return result;
-    }
-
-    public static boolean empty(final String s) {
-        // Null-safe, short-circuit evaluation.
-        return s == null || s.trim().isEmpty();
     }
 }
