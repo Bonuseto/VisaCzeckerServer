@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+}
+dependencies {
+    implementation 'junit:junit:4.12'
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
+    implementation group: 'com.google.firebase', name: 'firebase-admin', version: '7.1.1'
+    runtimeOnly group: 'com.google.gms', name: 'google-services', version: '3.1.1'
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testImplementation group: 'org.slf4j', name: 'slf4j-nop', version: '1.7.30'
+}
