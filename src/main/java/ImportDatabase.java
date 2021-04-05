@@ -15,15 +15,7 @@ public class ImportDatabase {
 
     public List<UserHelper> get_data() throws IOException, InterruptedException {
 
-        FileInputStream serviceAccount =
-                new FileInputStream("./ServiceAccountKeyVisa.json");
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://visaczekerfirebase-default-rtdb.europe-west1.firebasedatabase.app")
-                .build();
-
-        FirebaseApp.initializeApp(options);
 
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         DatabaseReference reference = rootNode.getReference();
@@ -31,7 +23,6 @@ public class ImportDatabase {
         final List<UserHelper> users = new ArrayList<>();
 
         reference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            Boolean condition = false;
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -42,12 +33,9 @@ public class ImportDatabase {
                     user = ds.getValue(UserHelper.class);
                     System.out.println("ImportDatabase action called, status is " + user.getStatus() );
 
-                    if (user.getStatus().equals("Decided - Approved") || user.getStatus().equals("Decided - Rejected")) {
-                            continue;
-                        } else {
-                            users.add(user);
-
-                        }
+                    if (!user.getStatus().equals("Decided - Approved") && !user.getStatus().equals("Decided - Rejected")) {
+                        users.add(user);
+                    }
 
                 }
                 semaphore.release();

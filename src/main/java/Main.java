@@ -1,28 +1,26 @@
 package main.java;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 import java.util.List;
+@SpringBootApplication
+@EnableScheduling
 
 public class Main {
 
+
+
     public static void main(String[] args) throws Exception {
-
-        ImportDatabase result = new ImportDatabase();
-        List<UserHelper> users_database = result.get_data();
-        UpdateDatabase update = new UpdateDatabase();
-        String status;
-
-        System.out.println(users_database);
-
-        for (UserHelper user : users_database) {
-            status = StatusCheck.check(user.getAppNum(), user.getAppNumFak(), user.getType(), user.getYear());
-            System.out.println("Application number " + user.getAppNum());
-            System.out.println("Current status is " + status);
-            System.out.println("Status in DB is " + user.getStatus());
-
-            update.update_data(user.getAppNum(), status);
-            System.out.println(users_database);
-        }
+           Firebase.initialize();
+             SpringApplication.run(Main.class, args);
+       // DatabaseCheck.checkDatabase();
+       // String status = StatusCheck.check("5194", "4", "TP", "2021");
+       // System.out.println(status);
     }
+
+
 }
 
 

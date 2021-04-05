@@ -25,7 +25,7 @@ public class StatusCheck {
         }
 
         String approvedStatus = String.valueOf(document.getElementsMatchingOwnText("Decided – APPROVED"));
-        String inprocessStatus = String.valueOf(document.getElementsMatchingOwnText("Process"));
+        String inprocessStatus = String.valueOf(document.getElementsMatchingOwnText("In Process"));
         String rejectedStatus = String.valueOf(document.getElementsMatchingOwnText("Decided – REJECTED"));
         String notFoundStatus = String.valueOf(document.getElementsMatchingOwnText("Not found"));
 
