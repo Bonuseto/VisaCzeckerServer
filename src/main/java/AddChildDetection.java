@@ -1,90 +1,42 @@
 package main.java;
 
-import com.google.firebase.database.*;
-import org.springframework.stereotype.Component;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Semaphore;
-
+//Running status check of recently added application
 @Service
-public class AddChildDetection {
+public class AddChildDetection implements ChildEventListener {
 
+    UserHelper user = new UserHelper();
 
-    public void child_detection() throws InterruptedException {
-        System.out.println("Looks like child has been added 1");
-        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-            DatabaseReference reference = rootNode.getReference();
-            Semaphore semaphore = new Semaphore(0);
-            final List<UserHelper> users = new ArrayList<>();
+    @Override
+    public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
+        user = snapshot.getValue(UserHelper.class);
+        String status = StatusCheck.check(user.getAppNum(), user.getAppNumFak(), user.getType(), user.getYear());
+        UpdateDatabase update = new UpdateDatabase();
+        update.update_data(user.uniqueID + " - " + user.getAppNum(), status);
+    }
 
-            reference.child("users").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    UserHelper user;
-                    String status = null;
-                    user = dataSnapshot.getValue(UserHelper.class);
-                    status = StatusCheck.check(user.getAppNum(), user.getAppNumFak(), user.getType(), user.getYear());
-                    System.out.println("Looks like child has been added" + status);
-
-
-
-                }
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s)
-                {
-
-                }
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-           /*     @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    UserHelper user;
-
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-
-                        user = ds.getValue(UserHelper.class);
-                        System.out.println("ImportDatabase action called, status is " + user.getStatus() );
-
-                        if (!user.getStatus().equals("Decided - Approved") && !user.getStatus().equals("Decided - Rejected")) {
-                            users.add(user);
-                        }
-
-                    }
-                    semaphore.release();
-
-
-                }
-
-
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-
-
-            }*/
-
-
-
-            semaphore.acquire();
-
-        }
+    @Override
+    public void onChildChanged(DataSnapshot snapshot, String previousChildName) {
 
     }
+
+    @Override
+    public void onChildRemoved(DataSnapshot snapshot) {
+
+    }
+
+    @Override
+    public void onChildMoved(DataSnapshot snapshot, String previousChildName) {
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError error) {
+
+    }
+}
 

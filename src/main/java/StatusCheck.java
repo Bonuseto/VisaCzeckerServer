@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
+//Getting status of application by using Jsoup
 public class StatusCheck {
 
     public static String check(String applicationNumImport, String xxFieldImport, String applicationTypeImport, String yearImport) {

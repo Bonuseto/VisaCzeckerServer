@@ -5,9 +5,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
+//Initializing connection to Firebase
 public class Firebase {
     public static void initialize() throws IOException {
         FileInputStream serviceAccount =

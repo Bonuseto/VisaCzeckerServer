@@ -4,13 +4,13 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
+//Checking status of all applications in database
 @Service
 public class DatabaseCheck {
 
-    public static String checkDatabase() throws ExecutionException, InterruptedException, IOException {
-        System.out.println("Here we go");
+    public static String checkDatabase() throws InterruptedException, IOException {
+
         ImportDatabase result = new ImportDatabase();
         List<UserHelper> users_database = result.get_data();
         UpdateDatabase update = new UpdateDatabase();
@@ -20,14 +20,7 @@ public class DatabaseCheck {
 
         for (UserHelper user : users_database) {
             status = StatusCheck.check(user.getAppNum(), user.getAppNumFak(), user.getType(), user.getYear());
-            System.out.println("Application number " + user.getAppNum());
-            System.out.println("Current status is " + status);
-            System.out.println("Status in DB is " + user.getStatus());
-
-            update.update_data(user.getAppNum(), status);
-            System.out.println(users_database);
-
-
+            update.update_data(user.uniqueID + " - " + user.getAppNum(), status);
         }
         return status;
     }
