@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpdateDatabase {
+public class UpdateStatus {
 
     FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
     DatabaseReference reference;

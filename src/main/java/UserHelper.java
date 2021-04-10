@@ -2,7 +2,7 @@ package main.java;
 
 public class UserHelper {
 
-    String appNum, appNumFak, type, year, visaStatus, uniqueID, firstTimeAdded, finalStatus;
+    private String appNum, appNumFak, type, year, visaStatus, uniqueID, firstTimeAdded, finalStatus;
 
     public UserHelper() {
     }

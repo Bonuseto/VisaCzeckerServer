@@ -15,7 +15,7 @@ public class AddChildDetection implements ChildEventListener {
     public void onChildAdded(DataSnapshot snapshot, String previousChildName) {
         user = snapshot.getValue(UserHelper.class);
         String status = StatusCheck.check(user.getAppNum(), user.getAppNumFak(), user.getType(), user.getYear());
-        UpdateDatabase update = new UpdateDatabase();
+        UpdateStatus update = new UpdateStatus();
         update.update_data(user.uniqueID + " - " + user.getAppNum(), status);
     }
 

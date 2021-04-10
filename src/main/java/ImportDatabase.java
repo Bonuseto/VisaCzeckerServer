@@ -9,12 +9,14 @@ import java.util.concurrent.Semaphore;
 
 public class ImportDatabase {
 
+    FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
+    DatabaseReference reference = rootNode.getReference();
+    Semaphore semaphore = new Semaphore(0);
+    final List<UserHelper> users = new ArrayList<>();
+
     //Importing all database objects that don't have final status "Decided - Rejected" or "Decided - Approved"
     public List<UserHelper> get_data() throws IOException, InterruptedException {
-        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-        DatabaseReference reference = rootNode.getReference();
-        Semaphore semaphore = new Semaphore(0);
-        final List<UserHelper> users = new ArrayList<>();
+
 
         reference.child("users").orderByChild("finalStatus").equalTo("false").addListenerForSingleValueEvent(new ValueEventListener() {
 

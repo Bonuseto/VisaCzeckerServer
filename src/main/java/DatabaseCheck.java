@@ -13,7 +13,7 @@ public class DatabaseCheck {
 
         ImportDatabase result = new ImportDatabase();
         List<UserHelper> users_database = result.get_data();
-        UpdateDatabase update = new UpdateDatabase();
+        UpdateStatus update = new UpdateStatus();
         String status = null;
 
         System.out.println(users_database);
